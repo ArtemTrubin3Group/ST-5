@@ -29,11 +29,14 @@ public class Sqrt {
     }
 
     public double calc() {
-        if (arg < 0) {
+        if (Double.isNaN(arg) || arg < 0) {
             return Double.NaN;
         }
         if (arg == 0) {
             return 0;
+        }
+        if (Double.isInfinite(arg)) {
+            return Double.POSITIVE_INFINITY;
         }
         return iter(1.0, arg);
     }

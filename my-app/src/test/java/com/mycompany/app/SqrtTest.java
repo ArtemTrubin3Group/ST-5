@@ -97,4 +97,37 @@ public class SqrtTest {
         double result = sqrt.iter(5.1, 25.0);
         assertTrue(Math.abs(result - 5.0) < sqrt.delta);
     }
+
+    @Test
+    public void testSquareRootOfInfinity() {
+        Sqrt sqrt = new Sqrt(Double.POSITIVE_INFINITY);
+        assertEquals(Double.POSITIVE_INFINITY, sqrt.calc(), 0.0);
+    }
+
+    @Test
+    public void testSquareRootOfNaN() {
+        Sqrt sqrt = new Sqrt(Double.NaN);
+        assertTrue(Double.isNaN(sqrt.calc()));
+    }
+
+    @Test
+    public void testIterWithExactGuess() {
+        Sqrt sqrt = new Sqrt(49.0);
+        assertEquals(7.0, sqrt.iter(7.0, 49.0), 0.00000001);
+    }
+
+    @Test
+    public void testImproveDoesImprove() {
+        Sqrt sqrt = new Sqrt(9.0);
+        double first = 2.0;
+        double improved = sqrt.improve(first, 9.0);
+        assertTrue(Math.abs(improved - 3.0) < Math.abs(first - 3.0));
+    }
+
+    @Test
+    public void testCalcWithManualDeltaChange() {
+        Sqrt sqrt = new Sqrt(50.0);
+        sqrt.delta = 1e-3;
+        assertEquals(Math.sqrt(50.0), sqrt.calc(), 1e-3);
+    }
 }
